@@ -3,795 +3,610 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Server Rules & Apply</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <title>متجر نِفر الاحترافي</title>
     <style>
+        :root {
+            --bg-main: #0f0f12;
+            --bg-card: #16161e;
+            --bg-input: #1e1e26;
+            --accent: #ff4757;
+            --accent-hover: #e84118;
+            --text-main: #ffffff;
+            --text-muted: #a4b0be;
+            --success: #2ed573;
+        }
+
         * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Cairo', sans-serif;
-            background: #0a0a0a;
-            color: #fff;
-            min-height: 100vh;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            padding-bottom: 60px;
         }
 
-        /* الشريط العلوي */
-        .navbar {
-            background: #111;
-            border-bottom: 2px solid #e94560;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .navbar .logo {
-            font-size: 1.5em;
-            font-weight: 900;
-            color: #e94560;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 20px;
-        }
-
-        .nav-links a {
-            color: #fff;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            transition: 0.3s;
-            font-weight: 600;
-        }
-
-        .nav-links a:hover, .nav-links a.active {
-            background: #e94560;
-        }
-
-        /* صفحات */
-        .page {
-            display: none;
-            padding: 40px 20px;
-            max-width: 900px;
-            margin: 0 auto;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* صفحة الترحيب */
-        .welcome-page {
+        /* الهيدر والشعار */
+        header {
+            background-color: var(--bg-card);
+            padding: 30px 20px;
             text-align: center;
-            padding-top: 100px;
+            border-bottom: 2px solid var(--accent);
         }
 
-        .welcome-page h1 {
-            font-size: 3em;
-            color: #e94560;
-            margin-bottom: 20px;
-        }
-
-        .welcome-page p {
-            font-size: 1.3em;
-            color: #888;
-            margin-bottom: 50px;
-        }
-
-        .panel-btn {
-            background: linear-gradient(135deg, #e94560, #c23152);
-            color: white;
-            border: none;
-            padding: 20px 60px;
-            font-size: 1.4em;
-            font-weight: 700;
-            border-radius: 12px;
-            cursor: pointer;
-            font-family: 'Cairo', sans-serif;
-            transition: 0.3s;
-        }
-
-        .panel-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(233, 69, 96, 0.5);
-        }
-
-        /* صفحة القوانين */
-        .rules-container {
-            display: none;
-            margin-top: 30px;
-        }
-
-        .rules-container.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .rules-buttons {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .rule-btn {
-            background: #111;
-            border: 2px solid #333;
-            color: #fff;
-            padding: 25px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-family: 'Cairo', sans-serif;
-            font-size: 1.1em;
-            font-weight: 700;
-            transition: 0.3s;
-        }
-
-        .rule-btn:hover, .rule-btn.active {
-            border-color: #e94560;
-            background: #1a1a2e;
-        }
-
-        .rule-btn .icon {
-            font-size: 2em;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        /* عرض القوانين */
-        .rules-display {
-            background: #111;
-            border: 1px solid #222;
-            border-radius: 16px;
-            padding: 30px;
-            display: none;
-        }
-
-        .rules-display.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .rules-display h2 {
-            color: #e94560;
-            font-size: 1.8em;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #222;
-        }
-
-        .rule-item {
-            display: flex;
-            gap: 15px;
-            padding: 15px 0;
-            border-bottom: 1px solid #1a1a1a;
-        }
-
-        .rule-item:last-child {
-            border-bottom: none;
-        }
-
-        .rule-num {
-            background: #e94560;
-            color: #fff;
-            width: 35px;
-            height: 35px;
+        .store-logo {
+            width: 90px;
+            height: 90px;
+            background-color: var(--bg-input);
             border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 15px;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+
+        header h1 {
+            font-size: 26px;
+            color: var(--text-main);
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        /* التقسيم الأساسي للموقع */
+        .main-layout {
+            max-width: 1300px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+        }
+
+        @media (max-width: 900px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* شبكة المنتجات */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background-color: var(--bg-card);
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid #232330;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .product-img-container {
+            width: 100%;
+            height: 200px;
+            background-color: #232330;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 900;
-            flex-shrink: 0;
+            color: var(--text-muted);
+            font-size: 14px;
         }
 
-        .rule-text h4 {
-            color: #fff;
-            margin-bottom: 5px;
-        }
-
-        .rule-text p {
-            color: #888;
-            line-height: 1.6;
-        }
-
-        /* صفحة التقديم */
-        .apply-form {
-            background: #111;
-            border: 1px solid #222;
-            border-radius: 16px;
-            padding: 40px;
-        }
-
-        .apply-form h2 {
-            color: #e94560;
-            font-size: 1.8em;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            color: #fff;
-            font-weight: 700;
-            margin-bottom: 10px;
-            font-size: 1.1em;
-        }
-
-        .form-group input, .form-group textarea {
+        .product-img {
             width: 100%;
-            padding: 15px;
-            background: #0a0a0a;
-            border: 2px solid #333;
-            border-radius: 10px;
-            color: #fff;
-            font-family: 'Cairo', sans-serif;
-            font-size: 1em;
-            transition: 0.3s;
+            height: 100%;
+            object-fit: cover;
         }
 
-        .form-group input:focus, .form-group textarea:focus {
-            outline: none;
-            border-color: #e94560;
+        .product-details {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
         }
 
-        .form-group textarea {
-            height: 120px;
-            resize: vertical;
+        .product-title {
+            font-size: 19px;
+            margin-bottom: 8px;
         }
 
-        .submit-btn {
-            width: 100%;
-            background: linear-gradient(135deg, #e94560, #c23152);
-            color: white;
-            border: none;
-            padding: 18px;
-            font-size: 1.3em;
-            font-weight: 700;
-            border-radius: 12px;
-            cursor: pointer;
-            font-family: 'Cairo', sans-serif;
-            transition: 0.3s;
-            margin-top: 10px;
+        .product-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            line-height: 1.5;
         }
 
-        .submit-btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 30px rgba(233, 69, 96, 0.5);
-        }
-
-        .submit-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* رسالة النجاح */
-        .success-msg {
-            display: none;
-            text-align: center;
-            padding: 40px;
-        }
-
-        .success-msg.show {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .success-msg .checkmark {
-            font-size: 5em;
-            margin-bottom: 20px;
-        }
-
-        .success-msg h2 {
-            color: #4CAF50;
+        /* خيارات الاشتراك والمدة داخل المنتج */
+        .product-options {
+            background-color: var(--bg-input);
+            padding: 12px;
+            border-radius: 8px;
             margin-bottom: 15px;
         }
 
-        .success-msg p {
-            color: #888;
+        .product-options label {
+            display: block;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
         }
 
-        /* متجاوب */
-        @media (max-width: 600px) {
-            .navbar {
-                flex-direction: column;
-                gap: 15px;
-            }
-            .welcome-page h1 {
-                font-size: 2em;
-            }
-            .rules-buttons {
-                grid-template-columns: 1fr;
-            }
-            .nav-links {
-                width: 100%;
-                justify-content: center;
-            }
+        .option-select {
+            width: 100%;
+            background-color: var(--bg-card);
+            color: white;
+            border: 1px solid #323242;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .price-display {
+            font-size: 20px;
+            color: var(--success);
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .btn-add-cart {
+            width: 100%;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: auto;
+        }
+
+        .btn-add-cart:hover {
+            background-color: var(--accent-hover);
+        }
+
+        /* السلة والكوبونات */
+        .sidebar {
+            background-color: var(--bg-card);
+            border-radius: 14px;
+            padding: 20px;
+            border: 1px solid #232330;
+            height: fit-content;
+        }
+
+        .sidebar-title {
+            font-size: 18px;
+            border-bottom: 1px solid #232330;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-items {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #1e1e26;
+            font-size: 13px;
+        }
+
+        .cart-item-info h4 {
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+
+        .cart-item-info p {
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        .btn-remove {
+            background: none;
+            border: none;
+            color: var(--accent);
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        /* قسم الكوبونات */
+        .coupon-section {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #232330;
+        }
+
+        .coupon-input-group {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .coupon-input {
+            flex-grow: 1;
+            background-color: var(--bg-input);
+            border: 1px solid #323242;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .btn-coupon {
+            background-color: #323242;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .btn-coupon:hover {
+            background-color: #424257;
+        }
+
+        .coupon-msg {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* ملخص الحساب وإرسال الطلب */
+        .cart-summary {
+            margin-top: 20px;
+            background-color: var(--bg-input);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .summary-row.total {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--success);
+            border-top: 1px solid #323242;
+            padding-top: 8px;
+            margin-top: 8px;
+        }
+
+        .btn-checkout {
+            width: 100%;
+            background-color: var(--success);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: opacity 0.2s;
+        }
+
+        .btn-checkout:hover {
+            opacity: 0.9;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 13px;
+            padding: 20px;
+            margin-top: 40px;
         }
     </style>
 </head>
 <body>
 
-    <!-- الشريط العلوي -->
-    <nav class="navbar">
-        <div class="logo">⚖️ Server Name</div>
-        <div class="nav-links">
-            <a href="#" class="active" onclick="showPage('welcome')">🏠 الرئيسية</a>
-            <a href="#" onclick="showPage('rules')">📜 Rules</a>
-            <a href="#" onclick="showPage('apply')">📝 Apply Server</a>
-        </div>
-    </nav>
+    <header>
+        <div class="store-logo">📦</div> <h1>مَتجر نِفر الاحترافي</h1>
+        <p>سكربتات، حزم تطوير، واشتراكات حصرية بأفضل الأسعار</p>
+    </header>
 
-    <!-- ===== صفحة الترحيب ===== -->
-    <div id="welcome" class="page welcome-page active">
-        <h1>👋 أهلاً بك في سيرفرنا</h1>
-        <p>نتمنى لك وقت ممتع معنا</p>
-        <button class="panel-btn" onclick="showPage('rules')">
-            📋 اضغط هنا للقوانين
-        </button>
-    </div>
-
-    <!-- ===== صفحة القوانين ===== -->
-    <div id="rules" class="page">
+    <div class="main-layout">
         
-        <div class="rules-buttons">
-            <!-- زر قوانين الإجرام -->
-            <button class="rule-btn" onclick="showRules('crime')">
-                <span class="icon">🔫</span>
-                قوانين الإجرام
-            </button>
-
-            <!-- زر قوانين الشرطة -->
-            <button class="rule-btn" onclick="showRules('police')">
-                <span class="icon">👮</span>
-                قوانين الشرطة
-            </button>
-
-            <!-- زر قوانين الإسعاف -->
-            <button class="rule-btn" onclick="showRules('ems')">
-                <span class="icon">🚑</span>
-                قوانين الإسعاف
-            </button>
-
-            <!-- زر القوانين العامة -->
-            <button class="rule-btn" onclick="showRules('general')">
-                <span class="icon">📋</span>
-                القوانين العامة
-            </button>
-        </div>
-
-        <!-- ===== قوانين الإجرام ===== -->
-        <div id="crime-rules" class="rules-display">
-            <h2>🔫 قوانين الإجرام</h2>
-
-            <div class="rule-item">
-                <div class="rule-num">1</div>
-                <div class="rule-text">
-                    <h4>ممنوع القتل العشوائي (RDM)</h4>
-                    <p>لا يسمح بقتل أي لاعب بدون سبب منطقي أو رولبلاي واضح.</p>
-                </div>
-            </div>
-
-            <div class="rule-item">
-                <div class="rule-num">2</div>
-                <div class="rule-text">
-                    <h4>ممنوع النصب خارج الرولبلاي</h4>
-                    <p>任何 عملية نصب يجب أن تكون ضمن إطار الرولبلاي المشروع.</p>
-                </div>
-            </div>
-
-            <div class="rule-item">
-                <div class="rule-num">3</div>
-                <div class="rule-text">
-                    <h4>ممنوع السرقة بدون رولبلاي</h4>
-                    <p>يجب عمل رولبلاي كامل قبل أي عملية سرقة.</p>
-                </div>
-            </div>
-
-            <div class="rule-item">
-                <div class="rule-num">4</div>
-                <div class="rule-text">
-                    <h4>ممنوع استخدام الأسلحة في المناطق الآمنة</h4>
-                    <p>المناطق الآمنة مثل المستشفى والشرطة ممنوع فيها أي عنف.</p>
-                </div>
-            </div>
-
-            <div class="rule-item">
-                <div class="rule-num">5</div>
-                <div class="rule-text">
-                    <h4>عدد أفراد العصابة</h4>
-                    <p>الحد الأقصى لأفراد العصابة الواحدة هو 6 أشخاص.</p>
-                </div>
-            </div>
-
-            <div class="rule-item">
-                <div class="rule-num">6</div>
-                <div class="rule-text">
-                    <h4>ممنوع الاحتيال على الشرطة</h4>
-                    <p>لا يسمح بالاتفاق مع الشرطة ثم خيانتهم في نفس الموقف.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===== قوانين الشرطة ===== -->
-        <div id="police-rules" class="rules-display">
-            <h2>👮 قوانين الشرطة</h2>
-
-            <div class="rule-item">
-                <div class="rule-num">1</div>
-                <div class="rule-text">
-                    <h4>الحياد في الرولبلاي</h4>
-                    <p>يجب على الشرطي أن يكون محايداً ولا يفضل أي طرف.</p>
-                </div>
-            </div>
-
-            <div class="rule-item">
-                <div class="rule-num">2</div>
-                <div class="rule-text">
-                    <h4>ممنوع استخدام القوة المفرطة</h4>
-                    <p>يجب استخدام القوة اللازمة فقط حسب الموقف.</p>
-                </div>
-            </div>
-
-            <div class="rule-item">
-                <div class="rule-num">3</div>
-                <div class="rule-text">
-                    <h4>ارتداء الزي الرسمي</h4>
-                    <p>يجب ارتداء زي الشرطة الرسمي أثناء الخدمة.</p>
-                </div>
-            </div>
-
-            <div class="rule-item">
-                <div class="rule-num">4</div>
-                <div class="rule-text">
-                    <h4>التعامل الاحترافي</h4>
-                    <p>يجب التعامل باحترافية مع جميع المواطنين.</p>
-                </div>
-            </div>
-
-            <div class="rule-item">
-                <div class="rule-num">5</div>
-                <div class="rule-text">
-                    <h4>عدم إساءة استخدام الصلاحيات</h4>
-                    <p>لا يسمح باستغلال منصب الشرطة لصالح شخصي.</p>
-                </div>
-            </div>
-
-            <div class="rule-item">
-                <div class="rule-num">6</div>
-                <div class="rule-text">
-                    <h4>التبليغ عن المخالفات</h4>
-                    <p>يجب تبليغ الإدارة عن أي مخالفة من زملاء الشرطة.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===== قوانين الإسعاف ===== -->
-        <div id="ems-rules" class="rules-display">
-            <h2>🚑 قوانين الإسعاف</h2>
-
-            <div class="rule-item">
-                <div class="rule-num">1</div>
-                <div class="rule-text">
-                    <h4>علاج جميع المرضى</h4>
-                    <p>يجب علاج جميع المرضى بغض النظر عن خلفيتهم.</p>
-                </div>
-            </div>
-
-            <div class="rule-item">
-                <div class="rule-num">2</div>
-                <div class="rule-text">
-                    <h4>ممنوع التدخل في النزاعات</h4>
-                    <p>دور الإسعاف فقط العلاج ولا يتدخل في المشاكل.</p>
-                </div>
-            </div>
-
-            <div class="rule-item">
-                <div class="rule-num">3</div>
-                <div class="rule-text">
-                    <h4>الاستجابة السريعة</h4>
-                    <p>يجب الاستجابة لجميع النداءات بأسرع وقت.</p>
-                </div>
-            </div>
-
-            <div class="rule-item">
-                <div class="rule-num">4</div>
-                <div class="rule-text">
-                    <h4>ارتداء الزي الرسمي</h4>
-                    <p>يجب ارتداء زي الإسعاف أثناء الخدمة.</p>
-                </div>
-            </div>
-
-            <div class="rule-item">
-                <div class="rule-num">5</div>
-                <div class="rule-text">
-                    <h4>عدم كشف معلومات المرضى</h4>
-                    <p>يجب الحفاظ على سرية معلومات المرضى.</p>
-                </div>
-            </div>
-
-            <div class="rule-item">
-                <div class="rule-num">6</div>
-                <div class="rule-text">
-                    <h4>عدم حمل أسلحة</h4>
-                    <p>لا يسمح لطاقم الإسعاف بحمل أي سلاح.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===== القوانين العامة ===== -->
-        <div id="general-rules" class="rules-display">
-            <h2>📋 القوانين العامة</h2>
-
-            <div class="rule-item">
-                <div class="rule-num">1</div>
-                <div class="rule-text">
-                    <h4>الاحترام المتبادل</h4>
-                    <p>يجب الاحترام بين جميع الأعضاء داخل وخارج الرولبلاي.</p>
-                </div>
-            </div>
-
-            <div class="rule-item">
-                <div class="rule-num">2</div>
-                <div class="rule-text">
-                    <h4>ممنوع الغش أو الهاك</h4>
-                    <p>أي استخدام للغش أو البرامج المحظورة يוביל حظر دائم.</p>
-                </div>
-            </div>
-
-            <div class="rule-item">
-                <div class="rule-num">3</div>
-                <div class="rule-text">
-                    <h4>ممنوع التحرش</h4>
-                    <p>أي نوع من التحرش اللفظي أو الجنسي ممنوع تماماً.</p>
-                </div>
-            </div>
-
-            <div class="rule-item">
-                <div class="rule-num">4</div>
-                <div class="rule-text">
-                    <h4>ممنوع العنصرية</h4>
-                    <p>أي كلام عنصري أو تمييزي يוביל مخالفة فورية.</p>
-                </div>
-            </div>
-
-            <div class="rule-item">
-                <div class="rule-num">5</div>
-                <div class="rule-text">
-                    <h4>الالتزام بالرولبلاي</h4>
-                    <p>يجب الالتزام بال角色扮演 وعدم الخروج عن الشخصية.</p>
-                </div>
-            </div>
-
-            <div class="rule-item">
-                <div class="rule-num">6</div>
-                <div class="rule-text">
-                    <h4>قرار الإدارة نهائي</h4>
-                    <p>كل ما تقرره الإدارة هو القانون ولا جدال فيه.</p>
-                </div>
-            </div>
-
-            <div class="rule-item">
-                <div class="rule-num">7</div>
-                <div class="rule-text">
-                    <h4>ممنوع النشر بدون إذن</h4>
-                    <p>لا يسمح بنشر روابط أو إعلانات بدون إذن الإدارة.</p>
-                </div>
-            </div>
-
-            <div class="rule-item">
-                <div class="rule-num">8</div>
-                <div class="rule-text">
-                    <h4>ممنوع التسريب</h4>
-                    <p>تسريب أي معلومات من السيرفر يוביל حظر دائم.</p>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- ===== صفحة التقديم ===== -->
-    <div id="apply" class="page">
-        
-        <!-- نموذج التقديم -->
-        <div id="apply-form" class="apply-form">
-            <h2>📝 تقديم على السيرفر</h2>
+        <main class="products-grid">
             
-            <div class="form-group">
-                <label>1️⃣ ما هو اسمك الرباعي الحقيقي؟</label>
-                <input type="text" id="fullName" placeholder="اكتب اسمك الرباعي هنا...">
+            <div class="product-card" id="p1">
+                <div class="product-img-container">
+                    <span style="font-size: 40px;">🔥</span>
+                </div>
+                <div class="product-details">
+                    <h3 class="product-title">منيو سيارات FiveM الاحترافي</h3>
+                    <p class="product-desc">قائمة متكاملة للتعديل على السيارات ورسبنتها داخل اللعبة، خفيفة وبدون دروب فريم.</p>
+                    
+                    <div class="product-options">
+                        <label>اختر مدة الاشتراك:</label>
+                        <select class="option-select" onchange="updatePrice('p1', this)">
+                            <option value="شهر" data-price="50">اشتراك لمدة شهر - 50 ر.س</option>
+                            <option value="سنة" data-price="250">اشتراك لمدة سنة - 250 ر.س</option>
+                        </select>
+                    </div>
+
+                    <div class="price-display"><span class="price-val">50</span> ر.س</div>
+                    <button class="btn-add-cart" onclick="addToCart('منيو سيارات FiveM', 'p1')">إضافة للسلة</button>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label>2️⃣ ما هو عمرك الحقيقي؟</label>
-                <input type="text" id="age" placeholder="اكتب عمرك هنا...">
+            <div class="product-card" id="p2">
+                <div class="product-img-container">
+                    <span style="font-size: 40px;">🎮</span>
+                </div>
+                <div class="product-details">
+                    <h3 class="product-title">أداة ماكرو الحركة المحترف (C#)</h3>
+                    <p class="product-desc">أداة ذكية لتسجيل ومحاكاة الأزرار بسرعة فائقة مخصصة للألعاب والمهام المتكررة.</p>
+                    
+                    <div class="product-options">
+                        <label>اختر نوع الترخيص:</label>
+                        <select class="option-select" onchange="updatePrice('p2', this)">
+                            <option value="شهر" data-price="35">ترخيص لمدة شهر - 35 ر.س</option>
+                            <option value="سنة" data-price="120">ترخيص لمدة سنة - 120 ر.س</option>
+                        </select>
+                    </div>
+
+                    <div class="price-display"><span class="price-val">35</span> ر.س</div>
+                    <button class="btn-add-cart" onclick="addToCart('ماكرو الحركة المحترف', 'p2')">إضافة للسلة</button>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label>3️⃣ ما هو سبب تقديمك لسيرفرنا؟</label>
-                <textarea id="reason" placeholder="اكتب سبب تقديمك هنا..."></textarea>
+            <div class="product-card" id="p3">
+                <div class="product-img-container">
+                    <span style="font-size: 40px;">🌐</span>
+                </div>
+                <div class="product-details">
+                    <h3 class="product-title">تصميم موقع نظام توظيف متكامل</h3>
+                    <p class="product-desc">صفحة توظيف عسكرية أو مجتمعية متطورة مربوطة بـ Discord Webhook لإرسال التقديمات فوراً.</p>
+                    
+                    <div class="product-options">
+                        <label>خيارات الدعم والتحديثات:</label>
+                        <select class="option-select" onchange="updatePrice('p3', this)">
+                            <option value="شهر" data-price="100">دعم وتحديثات لمدة شهر - 100 ر.س</option>
+                            <option value="سنة" data-price="400">دعم وتحديثات لمدة سنة - 400 ر.س</option>
+                        </select>
+                    </div>
+
+                    <div class="price-display"><span class="price-val">100</span> ر.س</div>
+                    <button class="btn-add-cart" onclick="addToCart('موقع نظام توظيف متكامل', 'p3')">إضافة للسلة</button>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label>4️⃣ هل أنت حافظ جميع القوانين ومستعد نسألك بالمقابلة؟</label>
-                <textarea id="ready" placeholder="اكتب إجابتك هنا..."></textarea>
+        </main>
+
+        <aside class="sidebar">
+            <div class="sidebar-title">
+                <span>سلّة المشتريات 🛒</span>
+                <span id="cart-count" style="background: var(--accent); font-size: 12px; padding: 2px 8px; border-radius: 10px;">0</span>
             </div>
 
-            <button class="submit-btn" onclick="submitApplication()">
-                ✅ تم - إرسال التقديم
-            </button>
-        </div>
+            <div class="cart-items" id="cart-items-container">
+                <p style="text-align: center; color: var(--text-muted); padding: 20px;" id="empty-cart-msg">السلة فارغة حالياً</p>
+            </div>
 
-        <!-- رسالة النجاح -->
-        <div id="success-msg" class="success-msg">
-            <div class="checkmark">✅</div>
-            <h2>تم إرسال تقديمك بنجاح!</h2>
-            <p>سيتم مراجعة طلبك من قبل الإدارة والتواصل معك قريباً</p>
-            <br>
-            <button class="panel-btn" onclick="resetForm()">
-                🔄 تقديم جديد
-            </button>
-        </div>
+            <div class="coupon-section">
+                <label style="font-size: 13px; color: var(--text-muted);">هل لديك كوبون خصم؟</label>
+                <div class="coupon-input-group">
+                    <input type="text" id="coupon-code" class="coupon-input" placeholder="أدخل الكوبون هنا...">
+                    <button class="btn-coupon" onclick="applyCoupon()">تطبيق</button>
+                </div>
+                <div id="coupon-message" class="coupon-msg"></div>
+            </div>
+
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>المجموع الفرعي:</span>
+                    <span><span id="subtotal-val">0</span> ر.س</span>
+                </div>
+                <div class="summary-row" id="discount-row" style="display: none; color: var(--accent);">
+                    <span>الخصم:</span>
+                    <span>-<span id="discount-val">0</span> ر.س</span>
+                </div>
+                <div class="summary-row total">
+                    <span>الإجمالي النهائي:</span>
+                    <span><span id="total-val">0</span> ر.س</span>
+                </div>
+            </div>
+
+            <button class="btn-checkout" onclick="checkoutWhatsApp()">تأكيد الطلب عبر الواتساب 💬</button>
+        </aside>
 
     </div>
 
-    <!-- JavaScript -->
+    <footer>
+        <p>&copy; 2026 متجر نِفر. جميع الحقوق محفوظة.</p>
+    </footer>
+
     <script>
-        // ===== عرض الصفحات =====
-        function showPage(pageName) {
-            // إخفاء جميع الصفحات
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            
-            // إظهار الصفحة المطلوبة
-            document.getElementById(pageName).classList.add('active');
-            
-            // تحديث الروابط
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.classList.remove('active');
-            });
-            event.target.classList.add('active');
+        let cart = [];
+        let discountPercent = 0;
+        
+        // !!! ضع رقم جوالك الحقيقي هنا بدلاً من هذا الرقم !!!
+        const MY_WHATSAPP = "966500000000"; 
 
-            // إخفاء القوانين عند تغيير الصفحة
-            if (pageName === 'rules') {
-                document.querySelectorAll('.rules-display').forEach(r => {
-                    r.classList.remove('active');
-                });
-                document.querySelectorAll('.rule-btn').forEach(b => {
-                    b.classList.remove('active');
+        // لتحديث السعر عند تغيير القائمة المنسدلة (شهر/سنة)
+        function updatePrice(productId, selectElement) {
+            const selectedOption = selectElement.options[selectElement.selectedIndex];
+            const newPrice = selectedOption.getAttribute('data-price');
+            document.querySelector(`#${productId} .price-val`).innerText = newPrice;
+        }
+
+        // إضافة العناصر للسلة
+        function addToCart(productName, cardId) {
+            const card = document.getElementById(cardId);
+            const selectElement = card.querySelector('.option-select');
+            const duration = selectElement.value;
+            const price = parseFloat(card.querySelector('.price-val').innerText);
+
+            const itemKey = productName + " (" + duration + ")";
+            const existingItem = cart.find(item => item.key === itemKey);
+
+            if (existingItem) {
+                existingItem.qty += 1;
+            } else {
+                cart.push({
+                    key: itemKey,
+                    name: productName,
+                    duration: duration,
+                    price: price,
+                    qty: 1
                 });
             }
+            renderCart();
         }
 
-        // ===== عرض القوانين =====
-        function showRules(type) {
-            // إخفاء جميع القوانين
-            document.querySelectorAll('.rules-display').forEach(r => {
-                r.classList.remove('active');
-            });
-            
-            // إزالة active من الأزرار
-            document.querySelectorAll('.rule-btn').forEach(b => {
-                b.classList.remove('active');
-            });
-            
-            // إظهار القوانين المطلوبة
-            document.getElementById(type + '-rules').classList.add('active');
-            
-            // تفعيل الزر
-            event.target.closest('.rule-btn').classList.add('active');
+        // حذف عنصر من السلة
+        function removeFromCart(itemKey) {
+            cart = cart.filter(item => item.key !== itemKey);
+            renderCart();
         }
 
-        // ===== إرسال التقديم =====
-        async function submitApplication() {
-            const fullName = document.getElementById('fullName').value.trim();
-            const age = document.getElementById('age').value.trim();
-            const reason = document.getElementById('reason').value.trim();
-            const ready = document.getElementById('ready').value.trim();
-
-            // التحقق من ملء جميع الحقول
-            if (!fullName || !age || !reason || !ready) {
-                alert('⚠️ الرجاء ملء جميع الحقول!');
+        // تحديث وعرض السلة والمجاميع الفاتورة
+        function renderCart() {
+            const container = document.getElementById('cart-items-container');
+            const emptyMsg = document.getElementById('empty-cart-msg');
+            const cartCount = document.getElementById('cart-count');
+            
+            container.innerHTML = "";
+            
+            if (cart.length === 0) {
+                emptyMsg.style.display = "block";
+                container.appendChild(emptyMsg);
+                cartCount.innerText = "0";
+                document.getElementById('subtotal-val').innerText = "0";
+                document.getElementById('total-val').innerText = "0";
+                document.getElementById('discount-row').style.display = "none";
                 return;
             }
 
-            // تعطيل الزر
-            const btn = document.querySelector('.submit-btn');
-            btn.disabled = true;
-            btn.textContent = '⏳ جاري الإرسال...';
+            emptyMsg.style.display = "none";
+            let subtotal = 0;
+            let totalQty = 0;
 
-            // Webhook URL
-            const webhookURL = "https://canary.discord.com/api/webhooks/1508456963552448644/DpcvE5wdpd2LrkjabIw7aq0N8R0qODLisimlrFL2gF2aFGk0Vpef1EEjUyjjAaFBAO7H";
+            cart.forEach(item => {
+                subtotal += (item.price * item.qty);
+                totalQty += item.qty;
 
-            // تجهيز الرسالة
-            const embed = {
-                "embeds": [{
-                    "title": "📝 تقديم جديد على السيرفر",
-                    "color": 15224576,
-                    "fields": [
-                        {
-                            "name": "1️⃣ الاسم الرباعي",
-                            "value": fullName,
-                            "inline": false
-                        },
-                        {
-                            "name": "2️⃣ العمر",
-                            "value": age,
-                            "inline": true
-                        },
-                        {
-                            "name": "3️⃣ سبب التقديم",
-                            "value": reason,
-                            "inline": false
-                        },
-                        {
-                            "name": "4️⃣ هل حافظ القوانين ومستعد؟",
-                            "value": ready,
-                            "inline": false
-                        }
-                    ],
-                    "footer": {
-                        "text": "تقديم عبر الموقع الرسمي"
-                    },
-                    "timestamp": new Date().toISOString()
-                }]
-            };
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'cart-item';
+                itemDiv.innerHTML = `
+                    <div class="cart-item-info">
+                        <h4>${item.name}</h4>
+                        <p>المدة: ${item.duration} | العدد: ${item.qty}</p>
+                    </div>
+                    <div style="text-align: left;">
+                        <div style="font-weight: bold; margin-bottom: 4px;">${item.price * item.qty} ر.س</div>
+                        <button class="btn-remove" onclick="removeFromCart('${item.key}')">حذف</button>
+                    </div>
+                `;
+                container.appendChild(itemDiv);
+            });
 
-            try {
-                const response = await fetch(webhookURL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(embed)
-                });
+            cartCount.innerText = totalQty;
+            
+            let discountAmount = subtotal * (discountPercent / 100);
+            let finalTotal = subtotal - discountAmount;
 
-                if (response.ok) {
-                    // إظهار رسالة النجاح
-                    document.getElementById('apply-form').style.display = 'none';
-                    document.getElementById('success-msg').classList.add('show');
-                } else {
-                    throw new Error('فشل الإرسال');
-                }
-            } catch (error) {
-                alert('❌ حدث خطأ أثناء الإرسال، حاول مرة أخرى');
-                console.error(error);
+            document.getElementById('subtotal-val').innerText = subtotal.toFixed(2);
+            
+            if (discountPercent > 0) {
+                document.getElementById('discount-row').style.display = "flex";
+                document.getElementById('discount-val').innerText = discountAmount.toFixed(2);
+            } else {
+                document.getElementById('discount-row').style.display = "none";
+            }
+            
+            document.getElementById('total-val').innerText = finalTotal.toFixed(2);
+        }
+
+        // الكوبونات المبرمجة داخل المتجر
+        function applyCoupon() {
+            const code = document.getElementById('coupon-code').value.trim().toUpperCase();
+            const msgElement = document.getElementById('coupon-message');
+
+            if (code === "NEVER10") {
+                discountPercent = 10;
+                msgElement.style.color = "var(--success)";
+                msgElement.innerText = "تم تطبيق الكوبون! خصم 10%";
+            } else if (code === "SAUDI50") {
+                discountPercent = 50;
+                msgElement.style.color = "var(--success)";
+                msgElement.innerText = "كوبون قوي! تم تطبيق خصم 50%";
+            } else {
+                discountPercent = 0;
+                msgElement.style.color = "var(--accent)";
+                msgElement.innerText = "الكوبون غير صحيح أو منتهي.";
+            }
+            renderCart();
+        }
+
+        // تجهيز الفاتورة بالكامل وإرسالها للواتساب
+        function checkoutWhatsApp() {
+            if (cart.length === 0) {
+                alert("سلتك فارغة! أضف بعض المنتجات أولاً.");
+                return;
             }
 
-            // تفعيل الزر مرة ثانية
-            btn.disabled = false;
-            btn.textContent = '✅ تم - إرسال التقديم';
-        }
-
-        // ===== إعادة تعيين النموذج =====
-        function resetForm() {
-            document.getElementById('fullName').value = '';
-            document.getElementById('age').value = '';
-            document.getElementById('reason').value = '';
-            document.getElementById('ready').value = '';
+            let message = "أهلاً ومرحباً متجر نِفر، أريد طلب المنتجات التالية:\\n\\n";
             
-            document.getElementById('apply-form').style.display = 'block';
-            document.getElementById('success-msg').classList.remove('show');
+            cart.forEach((item, index) => {
+                message += `${index + 1}. *${item.name}*\\n`;
+                message += `   - المدة: ${item.duration}\\n`;
+                message += `   - الكمية: ${item.qty}\\n`;
+                message += `   - السعر: ${item.price * item.qty} ر.س\\n\\n`;
+            });
+
+            const subtotal = document.getElementById('subtotal-val').innerText;
+            const total = document.getElementById('total-val').innerText;
+
+            message += `-------------------------\\n`;
+            message += `*المجموع الفرعي:* ${subtotal} ر.س\\n`;
+            if (discountPercent > 0) {
+                const discount = document.getElementById('discount-val').innerText;
+                message += `*الخصم المُطبق:* -${discount} ر.س (${discountPercent}%)\\n`;
+            }
+            message += `*الإجمالي النهائي:* ${total} ر.س\\n\\n`;
+            message += "يرجى تزويدي بطرق الدفع المتاحة لتأكيد الطلب.";
+
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/${MY_WHATSAPP}?text=${encodedMessage}`, '_blank');
         }
     </script>
-
 </body>
 </html>
